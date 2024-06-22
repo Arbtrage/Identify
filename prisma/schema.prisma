@@ -6,6 +6,19 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id                BigInt    @id @default(autoincrement())
+  email             String?   @unique
+  phoneNumber       String?   @unique
+  linkedId          BigInt?
+  linkPrecedence    String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime?
+  primaryContact    Contact?  @relation("PrimaryContacts", fields: [linkedId], references: [id])
+  secondaryContacts Contact[] @relation("PrimaryContacts")
 }
