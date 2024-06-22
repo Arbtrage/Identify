@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Post, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, UseGuards, Put, Body } from '@nestjs/common';
 import {
     ApiBearerAuth,
     ApiOkResponse,
@@ -8,9 +8,8 @@ import {
     ApiQuery,
 } from '@nestjs/swagger';
 import { IdentifyService } from './identify.service';
+import { IdentifyDto } from './dto/identify-contact.dto';
 @ApiTags('Identify')
-
-
 @Controller({ path: '/identify', version: '1' })
 export class IdentifyController {
     constructor(private identifyService: IdentifyService) { }
@@ -19,7 +18,7 @@ export class IdentifyController {
     @ApiOkResponse({ type: String })
     @ApiBadRequestResponse({ type: String })
     @Post('/')
-    async getContact() {
-        return await this.identifyService.getContact();
+    async getContact(@Body() data: IdentifyDto) {
+        return await this.identifyService.getContact(data);
     }
 }

@@ -5,10 +5,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const options = new DocumentBuilder()
-    .setTitle('Bytespeed API')
-    .setDescription('The bytespeed API description')
+    .setTitle('Identify API')
+    .setDescription('The identify API description')
     .setVersion('1.0')
-    .addTag('bytespeed')
+    .addTag('identify')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
