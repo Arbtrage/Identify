@@ -12,12 +12,21 @@ export class IdentifyService {
     constructor(private prisma: PrismaService) { }
 
     async getContact(data: IdentifyDto) {
-        let existingContact = await this.prisma.contact.findFirst({
+
+        if (!data.email && !data.phoneNumber) {
+            throw new Error("At least one of email or phoneNumber must be provided.");
+        }
+        const conditions = [];
+        if (data.email) {
+            conditions.push({ email: data.email });
+        }
+        if (data.phoneNumber) {
+            conditions.push({ phoneNumber: data.phoneNumber });
+        }
+
+        let existingContact =await this.prisma.contact.findFirst({
             where: {
-                OR: [
-                    { email: data.email },
-                    { phoneNumber: data.phoneNumber },
-                ],
+                OR: conditions,
             },
         });
 

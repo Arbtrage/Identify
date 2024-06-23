@@ -17,8 +17,8 @@ enum LinkPrecedence {
 
 model Contact {
   id                Int             @id @default(sequence())
-  email             String
-  phoneNumber       String
+  email             String?
+  phoneNumber       String?
   linkedId          Int?
   linkPrecedence    LinkPrecedence?
   createdAt         DateTime        @default(now())
